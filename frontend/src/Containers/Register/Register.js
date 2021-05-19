@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link as RouterLink } from "react-router-dom";
-import { Avatar, Button, Container, Grid, Link, makeStyles, Typography } from "@material-ui/core";
+import { Avatar, Container, Grid, Link, makeStyles, Typography } from "@material-ui/core";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+
 import FormElement from "../../Components/UI/Form/FormElement";
+import ButtonWithProgress from "../../Components/UI/ButtonWithProgress/ButtonWithProgress";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -28,27 +31,64 @@ const useStyles = makeStyles((theme) => ({
 
 const Register = () => {
   const classes = useStyles();
+  // const dispatch = useDispatch();
+
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+    displayName: "",
+  });
+
+  // const error = useSelector((state) => state.users.registerError);
+  // const loading = useSelector((state) => state.users.registerLoading);
+
+  const inputChangeHandler = (e) => {
+    const { name, value } = e.target;
+
+    setUser((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const submitFormHandler = (e) => {
+    e.preventDefault();
+    console.log("123");
+    // dispatch(registerUser({ ...user }));
+  };
+
+  const getFieldError = (fieldName) => {
+    try {
+      // return error.errors[fieldName].message;
+    } catch (e) {
+      return undefined;
+    }
+  };
+
   return (
     <Container component="section" maxWidth="xs">
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>{/* <LockOutlinedIcon /> */}</Avatar>
+        <Avatar className={classes.avatar}>
+          <LockOutlinedIcon />
+        </Avatar>
         <Typography component="h1" variant="h5" className={classes.header}>
           Sign up
         </Typography>
-        <Grid container spacing={1} direction="column" component="form" noValidate>
+        <Grid container spacing={1} direction="column" component="form" onSubmit={submitFormHandler} noValidate>
           <FormElement
             required
             label="Email"
             type="text"
+            onChange={inputChangeHandler}
             name="email"
+            value={user.email}
             autoComplete="new-email"
-            // error={getFieldError("email")}
+            error={getFieldError("email")}
           />
           <FormElement
             required
             label="Password"
             type="password"
+            onChange={inputChangeHandler}
             name="password"
+            value={user.password}
             autoComplete="new-password"
             // error={getFieldError("password")}
           />
@@ -56,23 +96,23 @@ const Register = () => {
             required
             label="Display Name"
             type="text"
+            onChange={inputChangeHandler}
             name="displayName"
-
+            value={user.displayName}
             // error={getFieldError("displayName")}
           />
           <Grid item xs>
-            <Button>Sign up</Button>
-            {/* <ButtonWithProgress
+            <ButtonWithProgress
               type="submit"
               fullWidth
               variant="contained"
               color="primary"
               className={classes.submit}
-              loading={loading}
-              disabled={loading}
+              // loading={loading}
+              // disabled={loading}
             >
               Sign up
-            </ButtonWithProgress> */}
+            </ButtonWithProgress>
           </Grid>
           <Grid item container justify="flex-end">
             <Grid item>
