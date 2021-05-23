@@ -1,18 +1,18 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link as RouterLink } from "react-router-dom";
-import { Avatar, Container, Grid, Link, makeStyles, Typography } from "@material-ui/core";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-
-import FormElement from "../../Components/UI/Form/FormElement";
-import ButtonWithProgress from "../../Components/UI/ButtonWithProgress/ButtonWithProgress";
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link as RouterLink } from 'react-router-dom';
+import { Avatar, Container, Grid, Link, makeStyles, Typography } from '@material-ui/core';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import { registerRequest } from '../../store/actions/usersActions';
+import FormElement from '../../components/UI/Form/FormElement';
+import ButtonWithProgress from '../../components/UI/ButtonWithProgress/ButtonWithProgress';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   avatar: {
     margin: theme.spacing(1),
@@ -31,16 +31,17 @@ const useStyles = makeStyles((theme) => ({
 
 const Register = () => {
   const classes = useStyles();
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const [user, setUser] = useState({
-    email: "",
-    password: "",
-    displayName: "",
+    email: '',
+    password: '',
+    displayName: '',
+    avatar: null,
   });
 
-  // const error = useSelector((state) => state.users.registerError);
-  // const loading = useSelector((state) => state.users.registerLoading);
+  const error = useSelector((state) => state.users.registerError);
+  const loading = useSelector((state) => state.users.registerLoading);
 
   const inputChangeHandler = (e) => {
     const { name, value } = e.target;
@@ -50,13 +51,13 @@ const Register = () => {
 
   const submitFormHandler = (e) => {
     e.preventDefault();
-    console.log("123");
-    // dispatch(registerUser({ ...user }));
+
+    dispatch(registerRequest({ ...user }));
   };
 
   const getFieldError = (fieldName) => {
     try {
-      // return error.errors[fieldName].message;
+      return error.errors[fieldName].message;
     } catch (e) {
       return undefined;
     }
@@ -80,7 +81,7 @@ const Register = () => {
             name="email"
             value={user.email}
             autoComplete="new-email"
-            error={getFieldError("email")}
+            error={getFieldError('email')}
           />
           <FormElement
             required
@@ -90,7 +91,7 @@ const Register = () => {
             name="password"
             value={user.password}
             autoComplete="new-password"
-            // error={getFieldError("password")}
+            error={getFieldError('password')}
           />
           <FormElement
             required
@@ -99,8 +100,9 @@ const Register = () => {
             onChange={inputChangeHandler}
             name="displayName"
             value={user.displayName}
-            // error={getFieldError("displayName")}
+            error={getFieldError('displayName')}
           />
+
           <Grid item xs>
             <ButtonWithProgress
               type="submit"
@@ -108,8 +110,8 @@ const Register = () => {
               variant="contained"
               color="primary"
               className={classes.submit}
-              // loading={loading}
-              // disabled={loading}
+              loading={loading}
+              disabled={loading}
             >
               Sign up
             </ButtonWithProgress>

@@ -1,15 +1,16 @@
-import React from "react";
-import { AppBar, Toolbar, Grid, makeStyles, Typography } from "@material-ui/core";
-import { Link } from "react-router-dom";
-import Usermenu from "./Menu/Usermenu";
-import AnonymousMenu from "./Menu/AnonymousMenu";
+import React from 'react';
+import { AppBar, Grid, makeStyles, Toolbar, Typography } from '@material-ui/core';
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import UserMenu from './Menu/UserMenu';
+import AnonymousMenu from './Menu/AnonymousMenu';
 
 const useStyles = makeStyles((theme) => ({
   mainLink: {
-    color: "inherit",
-    textDecoration: "none",
-    "&:hover": {
-      color: "inherit",
+    color: 'inherit',
+    textDecoration: 'none',
+    '&:hover': {
+      color: 'inherit',
     },
   },
   appBar: {
@@ -22,12 +23,13 @@ const useStyles = makeStyles((theme) => ({
 
 const AppToolbar = () => {
   const classes = useStyles();
-  const user = false;
+  const user = useSelector((state) => state.users.user);
+
   return (
     <>
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
-          <Grid container justify="space-between">
+          <Grid container justify="space-between" alignItems="center">
             <Grid item>
               <Typography variant="h6">
                 <Link to="/" className={classes.mainLink}>
@@ -35,7 +37,7 @@ const AppToolbar = () => {
                 </Link>
               </Typography>
             </Grid>
-            <Grid item>{user ? <Usermenu /> : <AnonymousMenu />}</Grid>
+            <Grid item>{user ? <UserMenu user={user} /> : <AnonymousMenu />}</Grid>
           </Grid>
         </Toolbar>
       </AppBar>
