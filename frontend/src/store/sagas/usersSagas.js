@@ -1,57 +1,60 @@
-import {put, takeEvery} from 'redux-saga/effects';
+import { put, takeEvery } from "redux-saga/effects";
 import axiosApi from "../../axiosApi";
 import {
-  facebookLoginRequest, googleLoginRequest,
-  loginFailure, loginRequest,
-  loginSuccess, logoutRequest,
+  facebookLoginRequest,
+  googleLoginRequest,
+  loginFailure,
+  loginRequest,
+  loginSuccess,
+  logoutRequest,
   logoutSuccess,
   registerFailure,
   registerRequest,
-  registerSuccess
+  registerSuccess,
 } from "../actions/usersActions";
-import {historyPush} from "../actions/historyActions";
+import { historyPush } from "../actions/historyActions";
 import API from "../../API";
-import {addNotification} from "../actions/notifierActions";
+import { addNotification } from "../actions/notifierActions";
 
-export function* registerUser({payload: userData}) {
+export function* registerUser({ payload: userData }) {
   try {
     const response = yield API.registerUser(userData);
     yield put(registerSuccess(response.data));
-    yield put(historyPush('/'));
+    yield put(historyPush("/"));
   } catch (error) {
     yield put(registerFailure(error.response.data));
   }
 }
 
-export function* loginUser({payload: userData}) {
+export function* loginUser({ payload: userData }) {
   try {
-    const response = yield axiosApi.post('/users/sessions', userData);
+    const response = yield axiosApi.post("/users/sessions", userData);
     yield put(loginSuccess(response.data.user));
-    yield put(historyPush('/'));
-    yield put(addNotification({message: 'Login successful', options: {variant: 'success'}}));
+    yield put(historyPush("/"));
+    yield put(addNotification({ message: "Login successful", options: { variant: "success" } }));
   } catch (error) {
     yield put(loginFailure(error.response.data));
   }
 }
 
-export function* facebookLogin({payload: data}) {
+export function* facebookLogin({ payload: data }) {
   try {
-    const response = yield axiosApi.post('/users/facebookLogin', data);
+    const response = yield axiosApi.post("/users/facebookLogin", data);
     yield put(loginSuccess(response.data.user));
-    yield put(historyPush('/'));
-    yield put(addNotification({message: 'Login successful', options: {variant: 'success'}}));
+    yield put(historyPush("/"));
+    yield put(addNotification({ message: "Login successful", options: { variant: "success" } }));
   } catch (error) {
     yield put(loginFailure(error.response.data));
   }
 }
 
-export function* googleLogin({payload: {tokenId, googleId}}) {
+export function* googleLogin({ payload: { tokenId, googleId } }) {
   try {
-    const body = {tokenId, googleId};
-    const response = yield axiosApi.post('/users/googleLogin', body);
+    const body = { tokenId, googleId };
+    const response = yield axiosApi.post("/users/googleLogin", body);
     yield put(loginSuccess(response.data.user));
-    yield put(historyPush('/'));
-    yield put(addNotification({message: 'Login successful', options: {variant: 'success'}}));
+    yield put(historyPush("/"));
+    yield put(addNotification({ message: "Login successful", options: { variant: "success" } }));
   } catch (error) {
     yield put(loginFailure(error.response.data));
   }
@@ -59,12 +62,12 @@ export function* googleLogin({payload: {tokenId, googleId}}) {
 
 export function* logout() {
   try {
-    yield axiosApi.delete('/users/sessions');
+    yield axiosApi.delete("/users/sessions");
     yield put(logoutSuccess());
-    yield put(historyPush('/'));
-    yield put(addNotification({message: 'Logged out', options: {variant: 'success'}}));
+    yield put(historyPush("/"));
+    yield put(addNotification({ message: "Logged out", options: { variant: "success" } }));
   } catch (e) {
-    yield put(addNotification({message: 'Could not logout', options: {variant: 'error'}}));
+    yield put(addNotification({ message: "Could not logout", options: { variant: "error" } }));
   }
 }
 

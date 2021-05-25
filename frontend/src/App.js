@@ -1,12 +1,12 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { Redirect, Route, Switch } from 'react-router-dom';
-import Layout from './components/UI/Layout/Layout';
-import Products from './containers/Products/Products';
-import NewEventsList from './containers/NewEventsList/NewEventsList';
-import Register from './containers/Register/Register';
-import Login from './containers/Login/Login';
-import { Helmet } from 'react-helmet';
+import React from "react";
+import { useSelector } from "react-redux";
+import { Redirect, Route, Switch } from "react-router-dom";
+import Layout from "./Components/UI/Layout/Layout";
+import EventsList from "./Containers/EventsList/EventsList";
+import NewEventsList from "./Containers/NewEventsList/NewEventsList";
+import Register from "./Containers/Register/Register";
+import Login from "./Containers/Login/Login";
+import { Helmet } from "react-helmet";
 
 const ProtectedRoute = ({ isAllowed, redirectTo, ...props }) => {
   return isAllowed ? <Route {...props} /> : <Redirect to={redirectTo} />;
@@ -19,12 +19,12 @@ const App = () => {
     <Layout>
       <Helmet titleTemplate="%s - PC Parts" defaultTitle="Shop" />
       <Switch>
-        <Route path="/" exact component={Products} />
-        <Route path="/category/:id" component={Products} />
+        <Route path="/" exact component={EventsList} />
+        {/* <Route path="/category/:id" component={Products} /> */}
         <ProtectedRoute
-          path="/products/new"
+          path="/events/new"
           component={NewEventsList}
-          isAllowed={user && user.role === 'admin'}
+          isAllowed={user && user.role === "admin"}
           redirectTo="/login"
         />
         <Route path="/register" component={Register} />

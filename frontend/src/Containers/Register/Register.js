@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link as RouterLink } from 'react-router-dom';
-import { Avatar, Container, Grid, Link, makeStyles, Typography } from '@material-ui/core';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import { registerRequest } from '../../store/actions/usersActions';
-import FormElement from '../../components/UI/Form/FormElement';
-import ButtonWithProgress from '../../components/UI/ButtonWithProgress/ButtonWithProgress';
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link as RouterLink } from "react-router-dom";
+import { Avatar, Container, Grid, Link, makeStyles, Typography } from "@material-ui/core";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import { registerRequest } from "../../store/actions/usersActions";
+import FormElement from "../../Components/UI/Form/FormElement";
+import ButtonWithProgress from "../../Components/UI/ButtonWithProgress/ButtonWithProgress";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(1),
@@ -34,9 +34,9 @@ const Register = () => {
   const dispatch = useDispatch();
 
   const [user, setUser] = useState({
-    email: '',
-    password: '',
-    displayName: '',
+    email: "",
+    password: "",
+    displayName: "",
     avatar: null,
   });
 
@@ -81,7 +81,7 @@ const Register = () => {
             name="email"
             value={user.email}
             autoComplete="new-email"
-            error={getFieldError('email')}
+            error={getFieldError("email")}
           />
           <FormElement
             required
@@ -91,7 +91,7 @@ const Register = () => {
             name="password"
             value={user.password}
             autoComplete="new-password"
-            error={getFieldError('password')}
+            error={getFieldError("password")}
           />
           <FormElement
             required
@@ -100,7 +100,7 @@ const Register = () => {
             onChange={inputChangeHandler}
             name="displayName"
             value={user.displayName}
-            error={getFieldError('displayName')}
+            error={getFieldError("displayName")}
           />
 
           <Grid item xs>

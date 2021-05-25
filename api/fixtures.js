@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
-const config = require('./config');
-const EventsList = require('./models/EventsList');
-const User = require('./models/User');
-const { nanoid } = require('nanoid');
+const mongoose = require("mongoose");
+const config = require("./config");
+const EventsList = require("./models/EventsList");
+const User = require("./models/User");
+const { nanoid } = require("nanoid");
 
 const run = async () => {
   await mongoose.connect(config.db.url, config.db.options);
@@ -16,30 +16,30 @@ const run = async () => {
 
   const [admin, user] = await User.create(
     {
-      email: 'user@event',
-      password: '123',
+      email: "user@event",
+      password: "123",
       token: nanoid(),
-      role: 'user',
-      displayName: 'User',
+      role: "user",
+      displayName: "User",
     },
     {
-      email: 'Mirafal@event',
-      password: 'violisimo',
+      email: "Mirafal@event",
+      password: "violisimo",
       token: nanoid(),
-      role: 'admin',
-      displayName: 'Mirafal',
+      role: "admin",
+      displayName: "Mirafal",
     }
   );
 
   await EventsList.create(
     {
-      title: 'Отпуск на ИК',
-      description: 'Отдохнуть с кайфом',
+      title: "Отпуск на ИК",
+      description: "Отдохнуть с кайфом",
       users: admin,
     },
     {
-      title: 'Работать и получить премию',
-      description: 'Большая премия',
+      title: "Работать и получить премию",
+      description: "Большая премия",
       users: user,
     }
   );

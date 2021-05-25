@@ -1,21 +1,21 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Helmet } from 'react-helmet';
-import { Link as RouterLink } from 'react-router-dom';
-import { Avatar, Container, Grid, Link, makeStyles, Typography } from '@material-ui/core';
-import { Alert, AlertTitle } from '@material-ui/lab';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import FormElement from '../../components/UI/Form/FormElement';
-import ButtonWithProgress from '../../components/UI/ButtonWithProgress/ButtonWithProgress';
-import GoogleLogin from '../../components/UI/GoogleLogin/GoogleLogin';
-import { loginRequest } from '../../store/actions/usersActions';
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Helmet } from "react-helmet";
+import { Link as RouterLink } from "react-router-dom";
+import { Avatar, Container, Grid, Link, makeStyles, Typography } from "@material-ui/core";
+import { Alert, AlertTitle } from "@material-ui/lab";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import FormElement from "../../Components/UI/Form/FormElement";
+import ButtonWithProgress from "../../Components/UI/ButtonWithProgress/ButtonWithProgress";
+import GoogleLogin from "../../Components/UI/GoogleLogin/GoogleLogin";
+import { loginRequest } from "../../store/actions/usersActions";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(1),
@@ -36,8 +36,8 @@ const Login = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [user, setUser] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
   const error = useSelector((state) => state.users.loginError);
   const loading = useSelector((state) => state.users.loginLoading);

@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { Button, CircularProgress, Grid, makeStyles, Typography } from '@material-ui/core';
-import ProductItem from './ProductItem';
-import { fetchEventsListsRequest } from '../../store/actions/eventsListActions';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { Button, CircularProgress, Grid, makeStyles, Typography } from "@material-ui/core";
+import EventsListItem from "./EventsListItem";
+import { fetchEventsListsRequest } from "../../store/actions/eventsListActions";
 
 const useStyles = makeStyles((theme) => ({
   progress: {
@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Products = () => {
+const EventsList = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.eventsLists.eventsListsLoading);
@@ -30,9 +30,9 @@ const Products = () => {
           <Typography variant="h4">Events</Typography>
         </Grid>
 
-        {user?.role === 'admin' && (
+        {user?.role === "admin" && (
           <Grid item>
-            <Button color="primary" component={Link} to="/products/new">
+            <Button color="primary" component={Link} to="/events/new">
               Add product
             </Button>
           </Grid>
@@ -47,7 +47,12 @@ const Products = () => {
           </Grid>
         ) : (
           eventsList.map((eventsList) => (
-            <ProductItem key={eventsList._id} id={eventsList._id} title={eventsList.title} />
+            <EventsListItem
+              key={eventsList._id}
+              id={eventsList._id}
+              title={eventsList.title}
+              user={eventsList.users.displayName}
+            />
           ))
         )}
       </Grid>
@@ -55,4 +60,4 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default EventsList;

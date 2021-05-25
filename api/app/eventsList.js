@@ -1,12 +1,12 @@
-const express = require('express');
-const EventsList = require('../models/EventsList');
-const auth = require('../middleware/auth');
-const permit = require('../middleware/permit');
-const upload = require('../multer').products;
+const express = require("express");
+const EventsList = require("../models/EventsList");
+const auth = require("../middleware/auth");
+const permit = require("../middleware/permit");
+const upload = require("../multer").products;
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     // const criteria = {};
 
@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
     //   criteria.category = req.query.category;
     // }
 
-    const eventsList = await EventsList.find().populate('users', 'email');
+    const eventsList = await EventsList.find().populate("users", ["email", "displayName"]);
     res.send(eventsList);
   } catch (e) {
     res.sendStatus(500);
@@ -35,12 +35,12 @@ router.get('/', async (req, res) => {
 //   }
 // });
 
-router.post('/', auth, permit('admin'), async (req, res) => {
+router.post("/", auth, permit("admin"), async (req, res) => {
   try {
     const eventsListData = {
       title: req.body.title,
       description: req.body.description,
-      users: req.body.users,
+      user: req.body.user,
     };
 
     const eventsList = new EventsList(eventsListData);

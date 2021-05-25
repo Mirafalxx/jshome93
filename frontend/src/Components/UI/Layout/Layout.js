@@ -1,22 +1,20 @@
-import React from 'react';
+import React from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import AppToolbar from "../AppToolbar/AppToolbar";
-import Container from "@material-ui/core/Container"
-import Notifier from "../../../containers/Notifier/Notifier";
+import Container from "@material-ui/core/Container";
+import Notifier from "../../../Containers/Notifier/Notifier";
 
-const Layout = ({children}) => {
+const Layout = ({ children }) => {
   return (
     <>
-      <CssBaseline/>
+      <CssBaseline />
       <header>
-        <AppToolbar/>
+        <AppToolbar />
       </header>
       <main>
-        <Container maxWidth="xl">
-          {children}
-        </Container>
+        <Container maxWidth="xl">{children}</Container>
       </main>
-      <Notifier/>
+      <Notifier />
     </>
   );
 };

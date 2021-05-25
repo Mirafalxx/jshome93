@@ -1,16 +1,16 @@
-import React from 'react';
-import { AppBar, Grid, makeStyles, Toolbar, Typography } from '@material-ui/core';
-import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import UserMenu from './Menu/UserMenu';
-import AnonymousMenu from './Menu/AnonymousMenu';
+import React from "react";
+import { AppBar, Grid, makeStyles, Toolbar, Typography } from "@material-ui/core";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import UserMenu from "./Menu/Usermenu";
+import AnonymousMenu from "./Menu/AnonymousMenu";
 
 const useStyles = makeStyles((theme) => ({
   mainLink: {
-    color: 'inherit',
-    textDecoration: 'none',
-    '&:hover': {
-      color: 'inherit',
+    color: "inherit",
+    textDecoration: "none",
+    "&:hover": {
+      color: "inherit",
     },
   },
   appBar: {
