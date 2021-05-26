@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { Button, CircularProgress, Grid, makeStyles, Typography } from "@material-ui/core";
-import EventsListItem from "./EventsListItem";
-import { fetchEventsListsRequest } from "../../store/actions/eventsListActions";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { Button, CircularProgress, Grid, makeStyles, Typography } from '@material-ui/core';
+import EventsListItem from './EventsListItem';
+import { fetchEventsListsRequest } from '../../store/actions/eventsListActions';
 
 const useStyles = makeStyles((theme) => ({
   progress: {
@@ -16,7 +16,7 @@ const EventsList = () => {
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.eventsLists.eventsListsLoading);
   const eventsList = useSelector((state) => state.eventsLists.eventsList);
-  console.log(eventsList);
+  console.log(eventsList[0]);
   const user = useSelector((state) => state.users.user);
 
   useEffect(() => {
@@ -30,7 +30,7 @@ const EventsList = () => {
           <Typography variant="h4">Events</Typography>
         </Grid>
 
-        {user?.role === "admin" && (
+        {user?.role === 'admin' && (
           <Grid item>
             <Button color="primary" component={Link} to="/events/new">
               Add product
@@ -51,7 +51,7 @@ const EventsList = () => {
               key={eventsList._id}
               id={eventsList._id}
               title={eventsList.title}
-              user={eventsList.users.displayName}
+              user={eventsList.user.displayName}
             />
           ))
         )}

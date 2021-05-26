@@ -1,20 +1,29 @@
-const express = require("express");
-const EventsList = require("../models/EventsList");
-const auth = require("../middleware/auth");
-const permit = require("../middleware/permit");
-const upload = require("../multer").products;
+const express = require('express');
+const EventsList = require('../models/EventsList');
+const auth = require('../middleware/auth');
+const permit = require('../middleware/permit');
+const upload = require('../multer').products;
 
 const router = express.Router();
 
-router.get("/", async (req, res) => {
+router.post('/', async (req, res) => {
   try {
-    // const criteria = {};
+    const eventsListData = {
+      title: req.body.title,
+      description: req.body.description,
+      user: req.body.user,
+    };
+    const eventsList = new EventsList(eventsListData);
+    await eventsList.save();
+    res.send(eventsList);
+  } catch (e) {
+    res.status(400).send(e);
+  }
+});
 
-    // if (req.query.category) {
-    //   criteria.category = req.query.category;
-    // }
-
-    const eventsList = await EventsList.find().populate("users", ["email", "displayName"]);
+router.get('/', async (req, res) => {
+  try {
+    const eventsList = await EventsList.find().populate('user', ['email', 'displayName']);
     res.send(eventsList);
   } catch (e) {
     res.sendStatus(500);
@@ -34,22 +43,5 @@ router.get("/", async (req, res) => {
 //     res.sendStatus(500);
 //   }
 // });
-
-router.post("/", auth, permit("admin"), async (req, res) => {
-  try {
-    const eventsListData = {
-      title: req.body.title,
-      description: req.body.description,
-      user: req.body.user,
-    };
-
-    const eventsList = new EventsList(eventsListData);
-    await eventsList.save();
-
-    res.send(eventsList);
-  } catch (e) {
-    res.status(400).send(e);
-  }
-});
 
 module.exports = router;
