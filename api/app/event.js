@@ -18,15 +18,6 @@ router.post('/', auth, async (req, res) => {
   }
 });
 
-// router.get('/', auth, async (req, res) => {
-//   try {
-//     const getEvent = await Event.find().populate('author', 'displayName');
-//     res.send(getEvent);
-//   } catch (e) {
-//     res.sendStatus(500);
-//   }
-// });
-
 router.get('/', auth, async (req, res) => {
   const user = req.user;
   try {
@@ -46,8 +37,8 @@ router.get('/', auth, async (req, res) => {
       return res.send(b);
     }
 
-    const eventsMe = await Event.find({ author: user._id }).populate('author', 'displayName');
-    return res.send(eventsMe);
+    const myEvents = await Event.find({ author: user._id }).populate('author', 'displayName');
+    return res.send(myEvents);
   } catch (e) {
     return res.sendStatus(e);
   }
