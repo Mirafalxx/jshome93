@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-const {nanoid} = require("nanoid");
+const { nanoid } = require('nanoid');
 
 const SALT_WORK_FACTOR = 10;
 
@@ -10,30 +10,30 @@ const UserSchema = new mongoose.Schema({
     required: true,
     unique: true,
     validate: {
-      validator: async function(value) {
+      validator: async function (value) {
         if (this.isModified('email')) {
-          const user = await User.findOne({email: value});
+          const user = await User.findOne({ email: value });
           return !user;
         }
 
         return true;
       },
-      message: 'This user is already registered'
-    }
+      message: 'This user is already registered',
+    },
   },
   password: {
     type: String,
-    required: true
+    required: true,
   },
   token: {
     type: String,
-    required: true
+    required: true,
   },
   role: {
     type: String,
     required: true,
     default: 'user',
-    enum: ['user', 'admin']
+    enum: ['user', 'admin'],
   },
   facebookId: String,
   displayName: {
@@ -41,9 +41,10 @@ const UserSchema = new mongoose.Schema({
     required: true,
   },
   avatar: String,
+  friends: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
 });
 
-UserSchema.pre('save', async function(next) {
+UserSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
 
   const salt = await bcrypt.genSalt(SALT_WORK_FACTOR);
@@ -58,14 +59,14 @@ UserSchema.set('toJSON', {
   transform: (doc, ret, options) => {
     delete ret.password;
     return ret;
-  }
+  },
 });
 
-UserSchema.methods.checkPassword = function(password) {
+UserSchema.methods.checkPassword = function (password) {
   return bcrypt.compare(password, this.password);
 };
 
-UserSchema.methods.generateToken = function() {
+UserSchema.methods.generateToken = function () {
   this.token = nanoid();
 };
 

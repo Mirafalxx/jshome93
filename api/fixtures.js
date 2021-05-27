@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const config = require('./config');
-const EventsList = require('./models/EventsList');
+const Event = require('./models/Event');
 const User = require('./models/User');
 const { nanoid } = require('nanoid');
 
@@ -10,7 +10,6 @@ const run = async () => {
   const collections = await mongoose.connection.db.listCollections().toArray();
 
   for (const coll of collections) {
-    // [{name: 'users'}, {name: 'products'}]
     await mongoose.connection.db.dropCollection(coll.name);
   }
 
@@ -31,16 +30,16 @@ const run = async () => {
     }
   );
 
-  await EventsList.create(
+  await Event.create(
     {
       title: 'Отпуск на ИК',
       description: 'Отдохнуть с кайфом',
-      user: admin,
+      author: admin._id,
     },
     {
       title: 'Работать и получить премию',
       description: 'Большая премия',
-      user: user,
+      author: user._id,
     }
   );
 

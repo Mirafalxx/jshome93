@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const eventsList = require('./app/eventsList');
+const event = require('./app/event');
 
 const users = require('./app/users');
 const mongoose = require('mongoose');
@@ -15,7 +15,7 @@ app.use(cors());
 
 const port = 8000;
 
-app.use('/eventsList', eventsList);
+app.use('/eventsList', event);
 app.use('/users', users);
 
 const run = async () => {

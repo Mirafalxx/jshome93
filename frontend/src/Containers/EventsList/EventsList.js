@@ -16,7 +16,7 @@ const EventsList = () => {
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.eventsLists.eventsListsLoading);
   const eventsList = useSelector((state) => state.eventsLists.eventsList);
-  console.log(eventsList[0]);
+
   const user = useSelector((state) => state.users.user);
 
   useEffect(() => {
@@ -51,7 +51,7 @@ const EventsList = () => {
               key={eventsList._id}
               id={eventsList._id}
               title={eventsList.title}
-              user={eventsList.user.displayName}
+              user={eventsList.author.displayName}
             />
           ))
         )}
