@@ -23,15 +23,11 @@ export function* fetchEventsLists() {
 }
 
 export function* createEventsList({ payload: eventsListData }) {
-  // try {
+  console.log("123");
   const response = yield axiosApi.post("/eventsList", eventsListData);
   yield put(createEventsListSuccess(response.data));
   yield put(historyPush("/"));
   yield put(addNotification({ message: "Event created successfully", options: { variant: "success" } }));
-  // } catch (error) {
-  //   yield put(createEventsListFailure(error.response.data));
-  //   yield put({ message: "Create event failed", options: { variant: "error" } });
-  // }
 }
 
 const eventsListSagas = [
